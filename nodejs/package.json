@@ -1,0 +1,16 @@
+{
+  "name": "email-scraper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.1227.0",
+    "jsdom": "^20.0.0",
+    "mailparser": "^3.5.0"
+  }
+}
