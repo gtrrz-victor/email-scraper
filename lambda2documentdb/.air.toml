@@ -4,7 +4,7 @@ tmp_dir = "tmp"
 
 [build]
   args_bin = []
-  bin = "./bin/emailReader"
+  bin = "./bin/storeBooking"
   cmd = "make -B test"
   delay = 100
   exclude_dir = ["assets", "tmp", "vendor", "testdata", "bin"]
