@@ -1,0 +1,765 @@
+Return-Path: <gtrrz.victor@gmail.com>
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+ by inbound-smtp.eu-west-1.amazonaws.com with SMTP id ue2solbogubgn87dsj38flqbv8dq6tttdoib92g1
+ for bookings@bqlever.com;
+ Wed, 09 Nov 2022 06:09:12 +0000 (UTC)
+X-SES-Spam-Verdict: PASS
+X-SES-Virus-Verdict: PASS
+Received-SPF: pass (spfCheck: domain of _spf.google.com designates 209.85.167.49 as permitted sender) client-ip=209.85.167.49; envelope-from=gtrrz.victor@gmail.com; helo=mail-lf1-f49.google.com;
+Authentication-Results: amazonses.com;
+ spf=pass (spfCheck: domain of _spf.google.com designates 209.85.167.49 as permitted sender) client-ip=209.85.167.49; envelope-from=gtrrz.victor@gmail.com; helo=mail-lf1-f49.google.com;
+ dkim=pass header.i=@gmail.com;
+ dmarc=pass header.from=gmail.com;
+X-SES-RECEIPT: AEFBQUFBQUFBQUFGYXUvUkZsZWVSREFHVVV4SFBJZDh3dFJEY0JoQTIwa004SDg2a0ZTOUZTUDNaNWtvb3FvMXNhbkh6RGlVRm9lTWttbnlEblNtdW55czlRWVFPVzhkMEpHRFdRQnlXS3pUb1RVV2NjZzZFbk1HVWtKcTVwbUs3WmlibGZQM0lZOUROV0Z3eFF4WmlyVXM0eFJXY2dubityeWp5eWJBM0NyOU5maWIyU3JVRnArNDZSUXI2RXhTREtoWWhXMTdHenJVNHNxS2VaVm0vWDQ0V1lBc3BIOEQwVFBkcUhBN2JzQURaMmFyRUEvZlJNanltbkYwdTIvaHpBWVR4ZzdrK1FwdjBTMW5KeDVqUkVha0NVLzJuWnNWcjkrMUx3alRGTnB1UmlnNGd3eThBeWc9PQ==
+X-SES-DKIM-SIGNATURE: a=rsa-sha256; q=dns/txt; b=u50EaAHOIn8EUiK/2gDTVUL/lMQBQHIyY9/UpJYtrguYSV9eEH5asF76Vu3QWgXrORJPxSPrpTenbs10yd2uCe931Sk9fdWBHKESqfvvv5rLQ3O68ktxCfQuvIblcA2WelLoxVba/9GwQ6lJ0I4QejWLmra4xqJ3nb9Q7y99x74=; c=relaxed/simple; s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1667974153; v=1; bh=SYuzcSPBNgGly99l0Ow3YibZ2sw3RUTddo8ZJAFjWYg=; h=From:To:Cc:Bcc:Subject:Date:Message-ID:MIME-Version:Content-Type:X-SES-RECEIPT;
+Received: by mail-lf1-f49.google.com with SMTP id g12so24220484lfh.3
+        for <bookings@bqlever.com>; Tue, 08 Nov 2022 22:09:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rsuRLDYebsQpx5NpZG9hZMHiYcvWyLtvh9GyVVxZebI=;
+        b=HxNrJzEzZqMqgsMBMKEhfnih18zvlRR7w3/pvE9X/NvvsrV/ftrbg1C+SG4B/fsJmu
+         FZDQ27iKYX7ANJulBOiRd3w10/nlJXOIeomrRba7yRxG2/NKk2nNuW8S/tJDkWs42mlX
+         SSuVm94jqwRDxX0gxPV0/HeVi3l7Q97P2YyqR/zvekBFCgnj91RWr5SHeX8MrAJZUNAn
+         iMj1kFOeqH4mWOD+FMeoH1MMlC/nLe9NsIu7MPRkeDQ/gq0PCZXhAHb/cMZySdFOZeCz
+         hQjLnTVUm1pR3mOw5gTSLvh0BZSkyCLItcJtMw4F9YGmwvIKnEMi+4yaoXYQPfRCWBpD
+         KkdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rsuRLDYebsQpx5NpZG9hZMHiYcvWyLtvh9GyVVxZebI=;
+        b=7ZldWZaPuhI7cQreunaytMT7dNJQGRg2iQL5iJDhOPPsgvdq7jIQW7A4H+hTL2/P3X
+         Y88A8IrE/jLnGAwXOoi2XhJbiWZ4xM8ndlMXDvGRj2C4XsnY31NaAeaMEqUK+hA07dEx
+         b1Gtr31YHXajB0DKeDzSCBGVG6IoYGZZ3yIGpCoRZLRMk1qTdLNbcWN0BGuF71KVv1Kh
+         OZRJ6Rj6KS5+A3iNG6Rg4TQ9EWxPNFFEEHmbBQ12j71+3fFNw2KkyA+CBpN/L/ppMHrM
+         t0UpGu+Epy25TCbC2wTkidE5h7Baslzmjv5ChcFoMOIoPmw5qTxaAn/15uM95LPG3cx+
+         iTKQ==
+X-Gm-Message-State: ACrzQf1WAxeUauLlTwhYzZSZs5h/nMMTwhc7XGLhOu/FKENwe88lIkeU
+	ehO2tRQQLgRWCfung40lliQyoEylMSyHtRFUp+exHEKW0cE=
+X-Google-Smtp-Source: AMsMyM6LdGYOgeyQBI05LbacXKV5JamN8EiAQRQgscVnv5rXF9TAoFZ3YqY+59VsC4bulJOhmA6czTt9ymdcHgkxf5U=
+X-Received: by 2002:a05:6512:39d6:b0:4a2:a97d:c880 with SMTP id
+ k22-20020a05651239d600b004a2a97dc880mr20127462lfu.220.1667974151500; Tue, 08
+ Nov 2022 22:09:11 -0800 (PST)
+MIME-Version: 1.0
+References: <0102018353c59ac2-bfe3adaf-8efc-4c38-93c3-b77b70dc9b22-000000@eu-west-1.amazonses.com>
+ <0d5f5ae0-59ef-d07b-c686-feb3d0698b8b@12tours.com>
+In-Reply-To: <0d5f5ae0-59ef-d07b-c686-feb3d0698b8b@12tours.com>
+From: Victor Gutierrez <gtrrz.victor@gmail.com>
+Date: Wed, 9 Nov 2022 17:08:59 +1100
+Message-ID: <CAHpfk-Ra2hROfPs1PiWf886csyNdeat1PNmcr2jk_JN2nPu0LQ@mail.gmail.com>
+Subject: =?UTF-8?Q?Fwd=3A_=2A=2A=2ASPAM=2A=2A=2A_Confirmaci=C3=B3n_reserva_Free_Tour_del_?=
+	=?UTF-8?Q?Castillo=2C_Catedral_y_Mal=C3=A1_Strana_=2D_Buendiatours=2Ecom?=
+To: bookings@bqlever.com
+Content-Type: multipart/alternative; boundary="000000000000cb779505ed037ead"
+
+--000000000000cb779505ed037ead
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+[image: Logo]
+Tu reserva
+
+
+
+
+Buend=C3=ADa manolo manigua
+
+Tu reserva est=C3=A1 confirmada
+
+El  servicio es ofrecido por 1 2 TOURS PRAGA y el punto de encuentro es
+enfrente del Rudolfinum, busca nuestros paraguas verde y blanca.
+
+Cualquier cuesti=C3=B3n relativa a *cambios, modificaciones o cancelaciones=
+ de
+tu reserva* estaremos encantados de atenderte en soporte@buendiatours.com
+Para cualquier *problema o incidencia en el destino *puedes ponerte en
+contacto con el proveedor del servicio en +34666218276
+
+
+
+
+
+
+Fecha del evento
+
+(S=C3=A1bado) 15 Octubre 2022 14:30
+Free Tour del Castillo, Catedral y Mal=C3=A1 Strana
+
+A=C3=B1adir a Google Calendar
+<https://www.google.com/calendar/render?action=3DTEMPLATE&text=3DFree+Tour+=
+del+Castillo%2C+Catedral+y+Mal%C3%A1+Strana&details=3DN%C2%BA+Reserva%3A+B6=
+51-T1177-220919-1%3Cbr%3E&location=3D50.0901144784751%2C+14.415428677363284=
+&dates=3D20221015T123000Z%2F20221015T153000Z>
+
+
+
+Resumen del pedido
+
+N=C2=BA Reserva : *B651-T1177-220919-1*
+*manolo manigua*
+=E2=9C=89 manolomanigua@hotmail.com
+<manolomanigua@hotmail.com?Subject=3DTu%0D++++++++++++++++++++++++++++++++=
+++++++++++++reserva>
+=E2=98=8E * +579999999999 <+579999999999>*
+<https://api.whatsapp.com/send?phone=3D573013146080>
+
+
+
+Adulto =C3=97 2
+0.00 EUR
+
+
+Subtotal
+0.00 EUR
+
+
+Total
+0.00 EUR
+
+
+
+Gestiona tu reserva
+<https://customersbookingmanager2.turitop.com/eyJhbGciOiJIUzI1NiIsInR5cCI6I=
+kpXVCJ9.eyJzb3VyY2UiOiJlZGl0X2Jvb2tpbmdfZW5kX3VzZXIiLCJjb21wYW55X3Nob3J0X2l=
+kIjoiVDExNzciLCJjb21wYW55X2RlZmF1bHRfZGF0ZXRpbWVfZm9ybWF0IjoiRE1ZIDI0SCIsIm=
+NvbXBhbnlfZGVmYXVsdF90aW1lem9uZSI6IkV1cm9wZVwvTWFkcmlkIiwiY29tcGFueV9sb2dvI=
+joiaHR0cHM6XC9cL2xvZ28udHVyaXRvcC5jb21cL2V5SmlkV05yWlhRaU9pSnBiV2N1ZEhWeWFY=
+UnZjQzVqYjIwaUxDSnJaWGtpT2lKVU1URTNOMXd2Ykc5bmIxd3ZWREV4TnpkZk1UWTBOVFV5TlR=
+RME1DNXdibWNpTENKbFpHbDBjeUk2ZXlKeVpYTnBlbVVpT25zaWQybGtkR2dpT2pFMU1Dd2labW=
+wwSWpvaVkyOTJaWElpZlgxOSIsImNvbXBhbnlfZW1haWwiOiJwcmFnYUAxMnRvdXJzLmNvbSIsI=
+mNvbXBhbnlfc2l0ZSI6IiIsImNvbXBhbnlfcGhvbmUiOiIrMzQ2NjYyMTgyNzYiLCJwcm9kdWN0=
+X3Nob3J0X2lkIjoiUDEiLCJwcm9kdWN0X2RlZmF1bHRfdGltZXpvbmUiOiJFdXJvcGVcL01hZHJ=
+pZCIsImJvb2tpbmdfc2hvcnRfaWQiOiJCNjUxLVQxMTc3LTIyMDkxOS0xIiwiYm9va2luZ19sYW=
+5ndWFnZV9jb2RlIjoiZXMiLCJpYXQiOjE2NjM1NTc4MDEsImV4cCI6MTY2NTg0NDIwMH0.5hn3c=
+s_UgNiSdG3O1PtXAkr25q0s0sZAmcQrcmkkGcU>
+
+Notas de cancelaci=C3=B3n
+
+La cancelaci=C3=B3n es gratuita, pero si no vas a poder asistir al tour o h=
+as
+cambiado de opini=C3=B3n, por favor, cancela la reserva, ya que, en caso
+contrario, el gu=C3=ADa estar=C3=A1 esperando
+
+
+
+
+
+
+1 2 TOURS PRAGA
+=E2=98=8E+34666218276
+=E2=9C=89praga@12tours.com
+
+=C2=A1Ll=C3=A9vame aqu=C3=AD!
+<https://maps.google.com/?q=3D50.0901144784751,%2014.415428677363284>
+[image: Facebook Icon]
+<https://www.facebook.com/buendiatours.fabricadeturismo> [image: Instagram
+Icon] <https://www.instagram.com/buendiatours> [image: Twitter Icon]
+<https://twitter.com/buendiatours>
+[image: Map]
+<https://maps.google.com/?q=3D50.0901144784751,%2014.415428677363284>
+
+
+Powered by TuriTop Booking System
+<https://www.turitop.com/es/booking-system-online-reservation-engine?utm_so=
+urce=3Duser_website&utm_medium=3Dpowered_by_link&utm_campaign=3Dbooking_sys=
+tem?utm_content=3Dfrom_t1177?utm_lang=3Des>
+
+--000000000000cb779505ed037ead
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div class=3D"gmail_quote"><div><div><br><br>
+      <br>
+     =20
+     =20
+     =20
+     =20
+     =20
+     =20
+      <table type=3D"lightBreeze" style=3D"border-collapse:collapse;backgro=
+und-color:rgb(240,240,240)" width=3D"100%" cellspacing=3D"0" cellpadding=3D=
+"0" border=3D"0">
+         <tbody>
+          <tr>
+            <td style=3D"border-collapse:collapse;display:table-cell" align=
+=3D"center">
+              <table style=3D"border-collapse:collapse;width:580px;margin:0=
+ auto" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" border=3D"0">
+                <tbody>
+                  <tr>
+                    <td colspan=3D"2" style=3D"font-size:12px;line-height:1=
+2px;border-collapse:collapse;display:table-cell" height=3D"12px">
+                      <div style=3D"height:auto;border:0px;overflow:hidden;=
+width:100%;padding:10px"> <img style=3D"margin-left:auto;margin-right:auto;=
+width:125px" src=3D"https://logo.turitop.com/eyJidWNrZXQiOiJpbWcudHVyaXRvcC=
+5jb20iLCJrZXkiOiJUMTE3N1wvbG9nb1wvVDExNzdfMTY0NTUyNTQ0MC5wbmcifQ=3D=3D" alt=
+=3D"Logo"> </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+           <tr>
+            <td style=3D"border-collapse:collapse;display:table-cell" align=
+=3D"center">
+              <table style=3D"border-collapse:collapse;background-color:whi=
+te;width:580px;margin:0 auto" width=3D"100%" cellspacing=3D"0" cellpadding=
+=3D"0" border=3D"0">
+                <tbody>
+                  <tr>
+                    <td>
+                      <table style=3D"border-collapse:collapse" width=3D"10=
+0%" cellspacing=3D"0" cellpadding=3D"0" border=3D"0">
+                       =20
+                         <tbody>
+                          <tr>
+                            <td style=3D"border-collapse:collapse;display:t=
+able-cell" valign=3D"top" align=3D"left">
+                              <table style=3D"border-collapse:collapse" wid=
+th=3D"100%" cellspacing=3D"0" cellpadding=3D"0" border=3D"0">
+                                <tbody>
+                                  <tr>
+                                    <td style=3D"border-collapse:collapse;d=
+isplay:table-cell" align=3D"left">
+                                      <div> <span>
+                                          Tu reserva </span> </div>
+                                    </td>
+                                  </tr>
+                                 =20
+                                   <tr>
+                                    <td colspan=3D"2" style=3D"font-size:18=
+px;line-height:18px;border-collapse:collapse;display:table-cell" height=3D"=
+18px">=C2=A0</td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan=3D"2" style=3D"border-colla=
+pse:collapse;display:table-cell;background-color:rgb(211,211,216);border-co=
+llapse:collapse;line-height:1px" width=3D"100%" valign=3D"top" height=3D"1"=
+ align=3D"left"> <br>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan=3D"2" style=3D"font-size:18=
+px;line-height:18px;border-collapse:collapse;display:table-cell" height=3D"=
+18px">=C2=A0</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                         =20
+                           <tr>
+                            <td colspan=3D"2" style=3D"font-size:12px;line-=
+height:12px;border-collapse:collapse;display:table-cell" height=3D"12px"> <=
+img src=3D"https://appturitop.s3.eu-central-1.amazonaws.com/T1177/emailtemp=
+late/00/1645526149_header.png" style=3D"border-radius:6px" id=3D"m_18337636=
+18542306087img" width=3D"100%" height=3D"auto"><br>
+                            </td>
+                          </tr>
+                         =20
+                         =20
+                           <tr>
+                            <td style=3D"border-collapse:collapse;display:t=
+able-cell;background-color:rgb(244,244,245);padding:18px" valign=3D"top" al=
+ign=3D"left">
+                              <div>
+                                <p>Buend=C3=ADa manolo manigua</p>
+                                <p>Tu reserva est=C3=A1 confirmada</p>
+                                <p>El=C2=A0 servicio es ofrecido por 1 2
+                                  TOURS PRAGA y el punto de encuentro es
+                                  enfrente del Rudolfinum, busca
+                                  nuestros paraguas verde y blanca.</p>
+                                <p>Cualquier cuesti=C3=B3n relativa a=C2=A0=
+<strong>cambios,
+                                    modificaciones o cancelaciones de tu
+                                    reserva</strong>=C2=A0estaremos
+                                  encantados de atenderte en=C2=A0<a href=
+=3D"mailto:soporte@buendiatours.com" target=3D"_blank">soporte@buendiatours=
+.com</a><br>
+                                  Para cualquier=C2=A0<strong>problema o
+                                    incidencia en el destino=C2=A0</strong>=
+puedes
+                                  ponerte en contacto con el proveedor
+                                  del servicio en +34666218276</p>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan=3D"2" style=3D"font-size:12px;line-=
+height:12px;border-collapse:collapse;display:table-cell" height=3D"12px">=
+=C2=A0</td>
+                          </tr>
+                          <tr>
+                            <td colspan=3D"2" style=3D"font-size:18px;line-=
+height:18px;border-collapse:collapse;display:table-cell" height=3D"18px">=
+=C2=A0</td>
+                          </tr>
+                          <tr>
+                            <td colspan=3D"2" style=3D"border-collapse:coll=
+apse;display:table-cell;background-color:rgb(211,211,216);border-collapse:c=
+ollapse;line-height:1px" width=3D"100%" valign=3D"top" height=3D"1" align=
+=3D"left"> <br>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan=3D"2" style=3D"font-size:18px;line-=
+height:18px;border-collapse:collapse;display:table-cell" height=3D"18px">=
+=C2=A0</td>
+                          </tr>
+                         =20
+                           <tr>
+                            <td style=3D"border-collapse:collapse;display:t=
+able-cell" valign=3D"top">
+                              <table style=3D"border-collapse:collapse" wid=
+th=3D"100%" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" align=3D"left"=
+>
+                                <tbody>
+                                  <tr>
+                                    <td colspan=3D"2" style=3D"font-size:18=
+px;line-height:18px;border-collapse:collapse;display:table-cell" height=3D"=
+18px">=C2=A0</td>
+                                  </tr>
+                                  <tr>
+                                    <td style=3D"border-collapse:collapse;d=
+isplay:table-cell" width=3D"468" valign=3D"middle" align=3D"left">
+                                      <div> <span style=3D"font-weight:600;=
+color:rgb(35,35,62);font-size:20px">Fecha
+                                          del evento</span><br>
+                                        <br>
+                                        <span style=3D"font-weight:600;colo=
+r:rgb(35,35,62)">
+                                          (S=C3=A1bado) 15 Octubre 2022 14:=
+30
+                                        </span> <br>
+                                        Free Tour del Castillo, Catedral
+                                        y Mal=C3=A1 Strana </div>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan=3D"2" style=3D"font-size:18=
+px;line-height:18px;border-collapse:collapse;display:table-cell" height=3D"=
+18px">=C2=A0</td>
+                                  </tr>
+                                   <tr>
+                                    <td style=3D"border-collapse:collapse;d=
+isplay:table-cell;border-radius:3px;background-color:#a4d55d" width=3D"100%=
+" valign=3D"center" align=3D"center"> <a href=3D"https://www.google.com/cal=
+endar/render?action=3DTEMPLATE&amp;text=3DFree+Tour+del+Castillo%2C+Catedra=
+l+y+Mal%C3%A1+Strana&amp;details=3DN%C2%BA+Reserva%3A+B651-T1177-220919-1%3=
+Cbr%3E&amp;location=3D50.0901144784751%2C+14.415428677363284&amp;dates=3D20=
+221015T123000Z%2F20221015T153000Z" target=3D"_blank">A=C3=B1adir a
+                                        Google Calendar</a> </td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan=3D"2" style=3D"font-size:18=
+px;line-height:18px;border-collapse:collapse;display:table-cell" height=3D"=
+18px">=C2=A0</td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan=3D"2" style=3D"font-size:18=
+px;line-height:18px;border-collapse:collapse;display:table-cell" height=3D"=
+18px">=C2=A0</td>
+                                  </tr>
+                                 =20
+                                   <tr>
+                                    <td style=3D"border-collapse:collapse;d=
+isplay:table-cell" width=3D"468" valign=3D"middle" align=3D"left">
+                                      <div> <span style=3D"font-weight:600;=
+color:rgb(35,35,62);font-size:20px">Resumen
+                                          del pedido</span> <br>
+                                        <br>
+                                        N=C2=BA Reserva : <b>B651-T1177-220=
+919-1</b>
+                                         <br>
+                                        <strong id=3D"m_1833763618542306087=
+turitop-client-name" style=3D"font-size:1.3em">manolo
+                                          manigua</strong><br>
+                                        <div><span style=3D"font-size:15px"=
+>=E2=9C=89</span>
+                                          <a id=3D"m_1833763618542306087tur=
+itop-client-email" href=3D"mailto:manolomanigua@hotmail.com?Subject=3DTu%0=
+D++++++++++++++++++++++++++++++++++++++++++++reserva" title=3D"manolomanig=
+ua@hotmail.com" target=3D"_blank">manolomanigua@hotmail.com</a></div>
+                                        <span style=3D"font-size:15px;displ=
+ay:inline-flex">=E2=98=8E</span>
+                                        <strong id=3D"m_1833763618542306087=
+turitop-client-phone" style=3D"font-size:1.4em"> <a href=3D"tel:+5730131460=
+80" target=3D"_blank">+579999999999</a></strong>=C2=A0=C2=A0<a style=3D"dis=
+play:none;color:black;font-size:18px" href=3D"https://api.whatsapp.com/send=
+?phone=3D573013146080" title=3D"Env=C3=ADa un WhatsApp al
+                                          cliente" target=3D"_blank"><img s=
+tyle=3D"width:23px;margin-bottom:5px" src=3D"https://app.turitop.com//img/w=
+hatsapp-icon.png"></a><br>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                   <tr>
+                                    <td style=3D"border-collapse:collapse;d=
+isplay:table-cell" width=3D"468" valign=3D"middle" align=3D"left">
+                                      <div> </div>
+                                      <br>
+                                    </td>
+                                  </tr>
+                                   <tr>
+                                    <td colspan=3D"2" style=3D"font-size:18=
+px;line-height:18px;border-collapse:collapse;display:table-cell" height=3D"=
+18px">=C2=A0 </td>
+                                  </tr>
+                                 =20
+                                   <tr>
+                                    <td>
+                                      <table style=3D"border-collapse:colla=
+pse" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" border=3D"0">
+                                        <tbody>
+                                          <tr>
+                                            <td style=3D"border-collapse:co=
+llapse;display:table-cell;border:1px solid rgb(211,211,216);padding:24px">
+                                             =20
+                                              <table style=3D"border-collap=
+se:collapse" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" border=3D"0=
+">
+                                                <tbody>
+                                                  <tr>
+                                                    <td style=3D"border-col=
+lapse:collapse;display:table-cell;text-align:left" width=3D"80%">
+                                                      <div style=3D"font-fa=
+mily:&quot;GT America Regular&quot;,&quot;Roboto&quot;,&quot;Helvetica&quot=
+;,&quot;Arial&quot;,sans-serif;font-weight:400;font-size:16px;line-height:2=
+5px;color:rgb(79,79,101)"> Adulto =C3=97
+                                                        22 </div>
+                                                    </td>
+                                                    <td style=3D"border-col=
+lapse:collapse;display:table-cell;text-align:right" width=3D"20%" valign=3D=
+"top" align=3D"right">
+                                                      <div style=3D"font-fa=
+mily:&quot;GT America Regular&quot;,&quot;Roboto&quot;,&quot;Helvetica&quot=
+;,&quot;Arial&quot;,sans-serif;font-weight:400;font-size:16px;line-height:2=
+5px;color:rgb(79,79,101)"> 0.00 EUR
+                                                      </div>
+                                                    </td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td colspan=3D"2" style=
+=3D"height:12px;line-height:12px;max-height:12px;border-collapse:collapse;d=
+isplay:table-cell"><br>
+                                                    </td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                             =20
+                                              <table style=3D"border-collap=
+se:collapse;border-top:1px solid rgb(211,211,216)" width=3D"100%" cellspaci=
+ng=3D"0" cellpadding=3D"0" border=3D"0">
+                                                <tbody>
+                                                  <tr>
+                                                    <td colspan=3D"2" style=
+=3D"height:12px;line-height:12px;max-height:12px;border-collapse:collapse;d=
+isplay:table-cell"><br>
+                                                    </td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td style=3D"border-col=
+lapse:collapse;display:table-cell;text-align:left" width=3D"80%">
+                                                      <div style=3D"font-fa=
+mily:&quot;GT America Regular&quot;,&quot;Roboto&quot;,&quot;Helvetica&quot=
+;,&quot;Arial&quot;,sans-serif;font-weight:400;font-size:16px;line-height:2=
+5px;color:rgb(79,79,101)"> Subtotal
+                                                      </div>
+                                                    </td>
+                                                    <td style=3D"border-col=
+lapse:collapse;display:table-cell;text-align:right" width=3D"20%" align=3D"=
+right">
+                                                      <div style=3D"font-fa=
+mily:&quot;GT America Regular&quot;,&quot;Roboto&quot;,&quot;Helvetica&quot=
+;,&quot;Arial&quot;,sans-serif;font-weight:400;font-size:16px;line-height:2=
+5px;color:rgb(79,79,101)"> 0.00 EUR
+                                                      </div>
+                                                    </td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td colspan=3D"2" style=
+=3D"height:12px;line-height:12px;max-height:12px;border-collapse:collapse;d=
+isplay:table-cell"><br>
+                                                    </td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                             =20
+                                              <table style=3D"border-collap=
+se:collapse;border-top:1px solid rgb(211,211,216)" width=3D"100%" cellspaci=
+ng=3D"0" cellpadding=3D"0" border=3D"0">
+                                                <tbody>
+                                                  <tr>
+                                                    <td colspan=3D"2" style=
+=3D"height:12px;line-height:12px;max-height:12px;border-collapse:collapse;d=
+isplay:table-cell"><br>
+                                                    </td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td style=3D"border-col=
+lapse:collapse;display:table-cell;text-align:left" width=3D"80%">
+                                                      <div> Total </div>
+                                                    </td>
+                                                    <td style=3D"border-col=
+lapse:collapse;display:table-cell;text-align:right" width=3D"20%" align=3D"=
+right">
+                                                      <div> 0.00 EUR
+                                                      </div>
+                                                    </td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td colspan=3D"2" style=
+=3D"height:12px;line-height:12px;max-height:12px;border-collapse:collapse;d=
+isplay:table-cell"><br>
+                                                    </td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan=3D"2" style=3D"font-size:18=
+px;line-height:18px;border-collapse:collapse;display:table-cell" height=3D"=
+18px">=C2=A0</td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan=3D"2" style=3D"font-size:12=
+px;line-height:12px;border-collapse:collapse;display:table-cell" height=3D"=
+12px">=C2=A0</td>
+                                  </tr>
+                                  <tr>
+                                    <td style=3D"border-collapse:collapse;d=
+isplay:table-cell" width=3D"100%" valign=3D"center" align=3D"center">
+                                     =20
+                                     =20
+                                     =20
+                                      <table style=3D"border-collapse:colla=
+pse" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" border=3D"0">
+                                        <tbody>
+                                          <tr>
+                                            <td style=3D"border-collapse:co=
+llapse;display:table-cell;border-radius:3px;background-color:#a4d55d" width=
+=3D"100%" valign=3D"center" align=3D"center"> <a href=3D"https://customersb=
+ookingmanager2.turitop.com/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzb3VyY2U=
+iOiJlZGl0X2Jvb2tpbmdfZW5kX3VzZXIiLCJjb21wYW55X3Nob3J0X2lkIjoiVDExNzciLCJjb2=
+1wYW55X2RlZmF1bHRfZGF0ZXRpbWVfZm9ybWF0IjoiRE1ZIDI0SCIsImNvbXBhbnlfZGVmYXVsd=
+F90aW1lem9uZSI6IkV1cm9wZVwvTWFkcmlkIiwiY29tcGFueV9sb2dvIjoiaHR0cHM6XC9cL2xv=
+Z28udHVyaXRvcC5jb21cL2V5SmlkV05yWlhRaU9pSnBiV2N1ZEhWeWFYUnZjQzVqYjIwaUxDSnJ=
+aWGtpT2lKVU1URTNOMXd2Ykc5bmIxd3ZWREV4TnpkZk1UWTBOVFV5TlRRME1DNXdibWNpTENKbF=
+pHbDBjeUk2ZXlKeVpYTnBlbVVpT25zaWQybGtkR2dpT2pFMU1Dd2labWwwSWpvaVkyOTJaWElpZ=
+lgxOSIsImNvbXBhbnlfZW1haWwiOiJwcmFnYUAxMnRvdXJzLmNvbSIsImNvbXBhbnlfc2l0ZSI6=
+IiIsImNvbXBhbnlfcGhvbmUiOiIrMzQ2NjYyMTgyNzYiLCJwcm9kdWN0X3Nob3J0X2lkIjoiUDE=
+iLCJwcm9kdWN0X2RlZmF1bHRfdGltZXpvbmUiOiJFdXJvcGVcL01hZHJpZCIsImJvb2tpbmdfc2=
+hvcnRfaWQiOiJCNjUxLVQxMTc3LTIyMDkxOS0xIiwiYm9va2luZ19sYW5ndWFnZV9jb2RlIjoiZ=
+XMiLCJpYXQiOjE2NjM1NTc4MDEsImV4cCI6MTY2NTg0NDIwMH0.5hn3cs_UgNiSdG3O1PtXAkr2=
+5q0s0sZAmcQrcmkkGcU" target=3D"_blank">Gestiona
+                                                tu reserva</a> </td>
+                                          </tr>
+                                          <tr>
+                                            <td style=3D"border-collapse:co=
+llapse;display:table-cell" width=3D"468" valign=3D"middle" align=3D"left">
+                                              <p style=3D"text-align:center=
+;font-weight:bold"> Notas de
+                                                cancelaci=C3=B3n </p>
+                                              <p style=3D"text-align:center=
+"> La cancelaci=C3=B3n
+                                                es gratuita, pero si no
+                                                vas a poder asistir al
+                                                tour o has cambiado de
+                                                opini=C3=B3n, por favor,
+                                                cancela la reserva, ya
+                                                que, en caso contrario,
+                                                el gu=C3=ADa estar=C3=A1 es=
+perando
+                                              </p>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                       </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                         =20
+                         =20
+                         =20
+                           <tr>
+                            <td colspan=3D"2" style=3D"font-size:18px;line-=
+height:18px;border-collapse:collapse;display:table-cell" height=3D"18px">=
+=C2=A0</td>
+                          </tr>
+                           <tr>
+                            <td style=3D"border-collapse:collapse;display:t=
+able-cell" align=3D"center">
+                              <table style=3D"border-collapse:collapse" wid=
+th=3D"100%" cellspacing=3D"0" cellpadding=3D"0" border=3D"0">
+                                <tbody>
+                                  <tr>
+                                    <td colspan=3D"2" style=3D"font-size:18=
+px;line-height:18px;border-collapse:collapse;display:table-cell" height=3D"=
+18px">=C2=A0</td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan=3D"2" style=3D"font-size:18=
+px;line-height:18px;border-collapse:collapse;display:table-cell" height=3D"=
+18px">=C2=A0</td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan=3D"2" style=3D"border-colla=
+pse:collapse;display:table-cell;background-color:rgb(211,211,216);border-co=
+llapse:collapse;line-height:1px" width=3D"100%" valign=3D"top" height=3D"1"=
+ align=3D"left"> <br>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan=3D"2" style=3D"font-size:18=
+px;line-height:18px;border-collapse:collapse;display:table-cell" height=3D"=
+18px">=C2=A0</td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan=3D"2" style=3D"font-size:18=
+px;line-height:18px;border-collapse:collapse;display:table-cell" height=3D"=
+18px">=C2=A0</td>
+                                  </tr>
+                                  <tr>
+                                    <td style=3D"border-collapse:collapse;d=
+isplay:table-cell" valign=3D"middle" align=3D"left">
+                                      <table style=3D"border-collapse:colla=
+pse" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" border=3D"0">
+                                        <tbody>
+                                          <tr>
+                                            <td style=3D"border-collapse:co=
+llapse;display:table-cell">
+                                              <table style=3D"border-collap=
+se:collapse;width:50%" width=3D"230" cellspacing=3D"0" cellpadding=3D"0" bo=
+rder=3D"0" align=3D"left">
+                                                <tbody>
+                                                  <tr>
+                                                    <td width=3D"100%" alig=
+n=3D"left"> <span>1 2 TOURS
+                                                        PRAGA</span><br>
+                                                      <span style=3D"font-s=
+ize:15px">=E2=98=8E</span><a href=3D"tel:+34666218276" target=3D"_blank">+3=
+4666218276</a>
+                                                      <br>
+                                                      <span style=3D"font-s=
+ize:15px">=E2=9C=89</span><a>praga@12tours.com</a><br>
+                                                      <br>
+                                                      <a href=3D"https://ma=
+ps.google.com/?q=3D50.0901144784751,%2014.415428677363284" target=3D"_blank=
+">=C2=A1Ll=C3=A9vame aqu=C3=AD!</a> </td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td width=3D"100%" alig=
+n=3D"left"> <a style=3D"float:left;padding-right:5px" href=3D"https://www.f=
+acebook.com/buendiatours.fabricadeturismo" target=3D"_blank"><img src=3D"ht=
+tps://app.turitop.com/img/social_network_icons/facebook-icon_24x24.png" alt=
+=3D"Facebook
+                                                          Icon"></a>
+                                                      <a style=3D"float:lef=
+t;padding-right:5px" href=3D"https://www.instagram.com/buendiatours" target=
+=3D"_blank"><img src=3D"https://app.turitop.com/img/social_network_icons/in=
+stagram-icon_24x24.png" alt=3D"Instagram
+                                                          Icon"></a>
+                                                      <a style=3D"float:lef=
+t;padding-right:5px" href=3D"https://twitter.com/buendiatours" target=3D"_b=
+lank"><img src=3D"https://app.turitop.com/img/social_network_icons/twitter-=
+icon_24x24.png" alt=3D"Twitter
+                                                          Icon"></a>
+                                                    </td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                              <table style=3D"border-collap=
+se:collapse;width:50%" width=3D"230" cellspacing=3D"0" cellpadding=3D"0" bo=
+rder=3D"0" align=3D"right">
+                                                <tbody>
+                                                  <tr>
+                                                    <td style=3D"border-col=
+lapse:collapse;display:table-cell" width=3D"100%"> <a href=3D"https://maps.=
+google.com/?q=3D50.0901144784751,%2014.415428677363284" target=3D"_blank">
+                                                        <img alt=3D"Map" sr=
+c=3D"https://appturitop.s3.eu-central-1.amazonaws.com/T1177/emailtemplate/0=
+0/1645525875_location.png" style=3D"border:0;height:auto;line-height:100%;o=
+utline:none;text-decoration:none;display:block;width:100%" width=3D"230" he=
+ight=3D"auto">
+                                                      </a> </td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+               </td>
+          </tr>
+          <tr>
+            <td style=3D"border-collapse:collapse;display:table-cell;width:=
+580px;margin:0 auto" align=3D"center">
+              <table style=3D"border-collapse:collapse;padding-left:60px;pa=
+dding-right:60px" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" border=
+=3D"0" align=3D"center">
+                <tbody>
+                  <tr>
+                    <td colspan=3D"2" style=3D"font-size:18px;line-height:1=
+8px;border-collapse:collapse;display:table-cell" height=3D"18px">=C2=A0</td=
+>
+                  </tr>
+                  <tr>
+                    <td style=3D"border-collapse:collapse;display:table-cel=
+l" align=3D"center">
+                      <div> Powered by <a href=3D"https://www.turitop.com/e=
+s/booking-system-online-reservation-engine?utm_source=3Duser_website&amp;ut=
+m_medium=3Dpowered_by_link&amp;utm_campaign=3Dbooking_system?utm_content=3D=
+from_t1177?utm_lang=3Des" target=3D"_blank">TuriTop Booking System</a>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan=3D"2" style=3D"font-size:12px;line-height:1=
+2px;border-collapse:collapse;display:table-cell" height=3D"12px">=C2=A0</td=
+>
+                  </tr>
+                  <tr>
+                    <td colspan=3D"2" style=3D"font-size:12px;line-height:1=
+2px;border-collapse:collapse;display:table-cell" height=3D"12px">=C2=A0</td=
+>
+                  </tr>
+                  <tr>
+                    <td colspan=3D"2" style=3D"font-size:12px;line-height:1=
+2px;border-collapse:collapse;display:table-cell" height=3D"12px">=C2=A0</td=
+>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div></div>
+
+--000000000000cb779505ed037ead--
